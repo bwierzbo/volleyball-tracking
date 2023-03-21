@@ -6,10 +6,10 @@ import os
 import cv2 as cv
 import numpy as np
 
-mask_out_path = ('../volleyball-tracking/data/maskoutpath')
-color_out_path =('../volleyball-tracking/data/coloroutpath')
+mask_out_path = ('../volleyball-tracking/data/maskpath')
+color_out_path =('../volleyball-tracking/data/colorpath')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/0.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -62,12 +62,12 @@ while True:
 
 
             #cutting images from black and white mask
-            #cut_m = mask[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
-            #cv.imwrite("{0}/b-{1:03d}.jpg".format(mask_out_path, n), cut_m)
+            cut_m = mask[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
+            cv.imwrite("{0}/b-{1:03d}.jpg".format(mask_out_path, n), cut_m)
 
             #cutting images from color mask
-            #cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
-            #cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
+            cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
+            cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
 
             n+=1
 
