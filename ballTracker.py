@@ -180,19 +180,25 @@ def handle_circles(mask, frame):
 
 
             #cutting images from black and white mask
-        cut_m = mask[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
+            #cut_m = mask[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
             #cv.imwrite("{0}/b-{1:03d}.jpg".format(mask_out_path, c), cut_m)
 
             #cutting images from color mask
-            #cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
+        cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
             #cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, c), cut_f)
+        if ml.checkIMG(cut_f) != 0:
+            continue
+        
+        
+        #circle, nz = check_circle(cut_m, 0, 0, rw, rh)
 
         c+=1
         prevCircle = chosen
 
         end_gen()
         
-
+def check_circle(pic, x, y, w, h):
+    return
 
 
 def draw_ball(pic):
