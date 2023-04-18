@@ -51,7 +51,7 @@ while True:
             #middle of circle
             #cv.circle(frame, (chosen[0], chosen[1]), 1, (0,100,100), 3)
             #circle around circle
-            #cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (255,0,255), 3)
+            cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (255,0,255), 3)
 
             #chosen 2 is radius 
 
@@ -74,14 +74,18 @@ while True:
             cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
             #cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
             
-            print(ml.checkIMG(cut_f))
+            # print(ml.checkIMG(cut_f))
+            # cv.imshow("cut piece", cut_f)
             
-            if ml.checkIMG(cut_f) != 0:
-                cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,252,124), 3)
-                #print("BALL")
-            else:
-                cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
-            #print(ml.checkIMG(cut_f))
+
+            # if ml.checkIMG(cut_f) != 0:
+            #     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,252,124), 3)
+            #     #print("BALL")
+            # else:
+            #     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
+            # #print(ml.checkIMG(cut_f))
+
+            print(ml.checkIMG(cut_f))
             n+=1
 
 
