@@ -6,8 +6,8 @@ import os
 import cv2 as cv
 import numpy as np
 
-mask_out_path = ('../volleyball-tracking/data/maskpath')
-color_out_path =('../volleyball-tracking/data/colorpath')
+mask_out_path = ('../volleyball-tracking/data/maskoutpath')
+color_out_path =('../volleyball-tracking/data/coloroutpath')
 
 videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
