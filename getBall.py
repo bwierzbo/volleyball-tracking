@@ -9,8 +9,9 @@ import numpy as np
 mask_out_path = ('../volleyball-tracking/data/maskoutpath')
 color_out_path =('../volleyball-tracking/data/coloroutpath')
 colorsubpath = ('../volleyball-tracking/data/colorsubpath')
+testpath = ('../volleyball-tracking/data/testpath')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/0.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -70,7 +71,7 @@ while True:
             cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
             #cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
             cut_c = cv.bitwise_and(cut_f,cut_f,mask = cut_m)
-            cv.imwrite("{0}/c-{1:03d}.jpg".format(colorsubpath, n), cut_c)
+            cv.imwrite("{0}/d-{1:04d}.jpg".format(testpath, n), cut_c)
 
             n+=1
 

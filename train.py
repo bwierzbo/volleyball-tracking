@@ -2,7 +2,8 @@
 import warnings
 warnings.filterwarnings('ignore')
 
-
+import os
+import random
 import numpy as np
 import pandas as pd 
 import tensorflow
@@ -13,10 +14,23 @@ from keras.utils import load_img
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
-import random
-import os
-import random
-import os
+from keras.models import Sequential, Model
+from keras.layers import Conv2D
+from keras.layers import Input
+from keras.layers import MaxPooling2D
+from keras.layers import Flatten
+from keras.layers import Dense
+from keras.layers import Activation
+from keras.layers import BatchNormalization
+from keras.layers import Dropout
+from keras.optimizers import RMSprop
+from keras.optimizers import SGD
+from keras.optimizers import Adam    
+
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+
+
+np.random.seed(1968)
 
 
 filenames = os.listdir("../volleyball-tracking/data/coloroutpath/")
@@ -38,20 +52,12 @@ FAST_RUN = False
 IMAGE_WIDTH=32
 IMAGE_HEIGHT=32
 IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
+
 IMAGE_CHANNELS=3
 
-from keras.models import Sequential, Model
-from keras.layers import Conv2D
-from keras.layers import Input
-from keras.layers import MaxPooling2D
-from keras.layers import Flatten
-from keras.layers import Dense
-from keras.layers import Activation
-from keras.layers import BatchNormalization
-from keras.layers import Dropout
-from keras.optimizers import RMSprop
-from keras.optimizers import SGD
-from keras.optimizers import Adam    
+
+
+#Model creation
 
 model = Sequential()
 
@@ -70,7 +76,7 @@ model.add(Dense(2, activation='softmax'))
 opt = SGD(lr=0.01)
 model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
-from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+#Model Training
 
 earlystop = EarlyStopping(patience=10)
 
@@ -133,8 +139,8 @@ history = model.fit_generator(
     callbacks=callbacks
 )
 
-model_json = model.to_json()
+newmodel_json = model.to_json()
 with open("./model.json","w") as json_file:
-  json_file.write(model_json)
+  json_file.write(newmodel_json)
 
-model.save_weights("model.h5")
+model.save_weights("newmodel.h5")
