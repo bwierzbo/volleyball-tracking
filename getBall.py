@@ -8,6 +8,7 @@ import numpy as np
 
 mask_out_path = ('../volleyball-tracking/data/maskoutpath')
 color_out_path =('../volleyball-tracking/data/coloroutpath')
+colorsubpath = ('../volleyball-tracking/data/colorsubpath')
 
 videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
@@ -63,11 +64,13 @@ while True:
 
             #cutting images from black and white mask
             cut_m = mask[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
-            cv.imwrite("{0}/b-{1:03d}.jpg".format(mask_out_path, n), cut_m)
+            #cv.imwrite("{0}/b-{1:03d}.jpg".format(mask_out_path, n), cut_m)
 
             #cutting images from color mask
             cut_f = frame[ry - rh - 5 : ry + 5, rx - 5 : rx + rw + 5]
-            cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
+            #cv.imwrite("{0}/c-{1:03d}.jpg".format(color_out_path, n), cut_f)
+            cut_c = cv.bitwise_and(cut_f,cut_f,mask = cut_m)
+            cv.imwrite("{0}/c-{1:03d}.jpg".format(colorsubpath, n), cut_c)
 
             n+=1
 
