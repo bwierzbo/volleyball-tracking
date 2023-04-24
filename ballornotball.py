@@ -12,7 +12,7 @@ import model_loader as ml
 mask_out_path = ('../volleyball-tracking/data/maskpath')
 color_out_path =('../volleyball-tracking/data/colorpath')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/0.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -76,16 +76,18 @@ while True:
             
             # print(ml.checkIMG(cut_f))
             # cv.imshow("cut piece", cut_f)
+            cut_c = cv.bitwise_and(cut_f,cut_f,mask = cut_m)
+
             
 
-            # if ml.checkIMG(cut_f) != 0:
+            # if ml.checkIMG(cut_c) != 0:
             #     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,252,124), 3)
             #     #print("BALL")
             # else:
             #     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
-            # #print(ml.checkIMG(cut_f))
 
-            print(ml.checkIMG(cut_f))
+            #print(ml.checkIMG(cut_f))
+            print(ml.checkIMG(cut_c))
             n+=1
 
 
