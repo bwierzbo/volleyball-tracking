@@ -39,7 +39,7 @@ while True:
 
 # see for HoughCircles perameter description https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
 
-    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 10, param1=300, param2= 0.85, minRadius=4, maxRadius=22)
+    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 5, param1=300, param2= 0.85, minRadius=4, maxRadius=22)
 
     if circles is not None:
             circles = np.uint16(np.around(circles))
@@ -80,10 +80,9 @@ while True:
             cut_c = cv.bitwise_and(cut_f,cut_f,mask = cut_m)
 
             
-
-            if ml.checkIMG(cut_c) != 0:
+            
+            if ml.checkIMG(cut_c) == 1:
                 cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,252,124), 3)
-                #print("BALL")
             else:
                 cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
 

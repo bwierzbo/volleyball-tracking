@@ -35,10 +35,8 @@ loaded_model.load_weights("../volleyball-tracking/model.h5")
 
 
 
-def checkIMG(img):
-    img = cv.resize(img, (size, size))
-    img = cv.cvtColor(img,cv.COLOR_BGR2RGB)
-
+def checkIMG(pic):
+    img = cv.resize(pic, (size, size))
     img = np.reshape(img,[1,size, size, dim])
     prediction = np.argmax(loaded_model.predict(img, verbose=0), axis=-1)[0]
     return prediction
