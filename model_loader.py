@@ -29,15 +29,10 @@ dim = 3
 def checkIMG(img):
     img = cv.resize(img, (size, size))
     img = np.reshape(img,[1,size, size, dim])
-    return np.argmax(loaded_model.predict(img, verbose=0),axis=1)
+    prediction = np.argmax(model.predict(img, verbose=0), axis=-1)[0]
+    return prediction
 
 
 
-#model = keras.models.load_model('../volleyball-tracking/model/model.h5')
-json_file = open('../volleyball-tracking/model/model.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-
-loaded_model.load_weights('../volleyball-tracking/model/model.h5')
+model = keras.models.load_model('../volleyball-tracking/model/')
 

@@ -8,10 +8,10 @@ import numpy as np
 
 mask_out_path = ('../volleyball-tracking/data/maskoutpath')
 color_out_path =('../volleyball-tracking/data/coloroutpath')
-colorsubpath = ('../volleyball-tracking/data/colorsubpath')
+colorsubpath = ('../volleyball-tracking/data/getlots')
 testpath = ('../volleyball-tracking/data/testpath')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/1.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/getball3.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -37,7 +37,7 @@ while True:
 
 # see for HoughCircles perameter description https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
 
-    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 90, param1=300, param2= 0.85, minRadius=4, maxRadius=19)
+    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 10, param1=300, param2= 0.85, minRadius=4, maxRadius=22)
 
     if circles is not None:
             circles = np.uint16(np.around(circles))
@@ -86,7 +86,7 @@ while True:
 
     cv.imshow("movingMask", frame)
 
-    if cv.waitKey(10) & 0xFF == ord('q'): break
+    if cv.waitKey(25) & 0xFF == ord('q'): break
 
 videoCapture.release()
 cv.destroyAllWindows()

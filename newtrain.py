@@ -18,6 +18,7 @@ import os
 import numpy as np
 import pandas as pd 
 from keras.preprocessing.image import ImageDataGenerator
+from keras.utils import load_img
 
 
 filenames = os.listdir("../volleyball-tracking/training/train/")
@@ -39,13 +40,18 @@ df["category"] = df["category"].replace({0: 'ball', 1: 'not'})
 
 size = 32
 input_shape = (size, size, 3)
+IMAGE_WIDTH=32
+IMAGE_HEIGHT=32
+IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
+IMAGE_CHANNELS=3
 
 model = Sequential()
 
-model.add(Conv2D(32,(3,3), activation='relu', input_shape=input_shape))
+
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
 model.add(MaxPooling2D())
 
-model.add(Conv2D(64,(3,3), activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D())
 
 model.add(Flatten())
@@ -53,20 +59,9 @@ model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.1))
 model.add(Dense(2, activation='softmax'))
 
-opt = SGD(lr=0.01)
-model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01), metrics=['accuracy'])
 
 model.summary()
-
-earlystop = EarlyStopping(patience=10)
-
-learning_rate_reduction = ReduceLROnPlateau(monitor='val_accuracy', 
-                                            patience=2, 
-                                            verbose=1, 
-                                            factor=0.5, 
-                                            min_lr=0.00001)
-
-callbacks = [earlystop, learning_rate_reduction]
 
 
 train_df, validate_df = train_test_split(df, test_size=0.50, random_state=42)
@@ -75,7 +70,8 @@ validate_df = validate_df.reset_index(drop=True)
 
 total_train = train_df.shape[0]
 total_validate = validate_df.shape[0]
-batch_size=15
+batch_size=10
+epochs = 50
 
 train_datagen = ImageDataGenerator(
     rotation_range=15,
@@ -85,11 +81,10 @@ train_datagen = ImageDataGenerator(
     horizontal_flip=True,
     width_shift_range=0.1,
     height_shift_range=0.1
-)
-
+    )
 train_generator = train_datagen.flow_from_dataframe(
     train_df, 
-    "../volleyball-tracking/training/train/", 
+    "../volleyball-tracking/training/train/",
     x_col='filename',
     y_col='category',
     target_size=(32, 32),
@@ -110,29 +105,26 @@ validation_generator = validation_datagen.flow_from_dataframe(
 
 history = model.fit_generator(
     train_generator, 
-    epochs=50,
+    epochs=epochs,
     validation_data=validation_generator,
-    validation_steps=10,
-    steps_per_epoch=20,
-    callbacks=callbacks
+    validation_steps=total_validate//batch_size,
+    steps_per_epoch=total_train//batch_size,
 )
 
 
-model_json = model.to_json()
-with open("./model.json","w") as json_file:
-  json_file.write(model_json)
 
-model.save_weights("./model.h5")
+model.save('../volleyball-tracking/model/')
+
 
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 12))
 ax1.plot(history.history['loss'], color='b', label="Training loss")
 ax1.plot(history.history['val_loss'], color='r', label="validation loss")
-ax1.set_xticks(np.arange(1, 50, 1))
+ax1.set_xticks(np.arange(1, epochs, 1))
 ax1.set_yticks(np.arange(0, 1, 0.1))
 
 ax2.plot(history.history['accuracy'], color='b', label="Training accuracy")
 ax2.plot(history.history['val_accuracy'], color='r',label="Validation accuracy")
-ax2.set_xticks(np.arange(1, 50, 1))
+ax2.set_xticks(np.arange(1, epochs, 1))
 
 legend = plt.legend(loc='best', shadow=True)
 plt.tight_layout()
