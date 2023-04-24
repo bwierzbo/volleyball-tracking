@@ -13,7 +13,7 @@ mask_out_path = ('../volleyball-tracking/data/maskpath')
 color_out_path =('../volleyball-tracking/data/colorpath')
 testpath = ('../volleyball-tracking/data/testpath')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/testingball.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/shortertrain.avi')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -87,7 +87,7 @@ while True:
             else:
                 cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
 
-            cv.imwrite("{0}/d-{1:05d}.jpg".format(testpath, n), cut_c)
+            #cv.imwrite("{0}/d-{1:05d}.jpg".format(testpath, n), cut_c)
             print(ml.checkIMG(cut_c))
             n+=1
 
