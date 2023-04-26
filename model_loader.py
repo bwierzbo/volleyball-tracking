@@ -26,11 +26,11 @@ dim = 3
 
 #model = keras.models.load_model('../volleyball-tracking/model/')
 
-json_file = open('../volleyball-tracking/model.json', 'r')
+json_file = open('./models/model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
-loaded_model.load_weights("../volleyball-tracking/model.h5")
+loaded_model.load_weights("./models/model.h5")
 
 
 
