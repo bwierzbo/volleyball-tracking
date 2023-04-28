@@ -87,8 +87,6 @@ model = Sequential([
     MaxPooling2D(2,2),
     Conv2D(64,(3,3), activation='relu'),
     MaxPooling2D(2,2),
-
-
     Flatten(),
     Dense(512, activation='relu'),
     Dropout(0.1),
@@ -96,8 +94,8 @@ model = Sequential([
     Dense(1, activation='sigmoid')  
 ])
 
-
-model.compile(optimizer="adam", loss='binary_crossentropy', metrics = ['accuracy'])
+model.summary()
+model.compile(loss='binary_crossentropy', optimizer="adam", metrics = ['accuracy'])
 
 
 earlystop = EarlyStopping(patience=10)
