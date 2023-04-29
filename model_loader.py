@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+"""model_loader.py: Running this code will load the model trained from train.py for use by ballornotball.py."""
+
+__author__      = "Benjamin Wierzbanowski"
+
+
 import sys
 import numpy as np
 import cv2 as cv

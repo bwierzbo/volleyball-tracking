@@ -1,7 +1,10 @@
+#!/usr/bin/env python
 
-#import os for file writing
-#importing openCV full package - pip install opencv-contrib-python
-#importing numpy for math
+"""getBall.py: Running this code will go through a volleyball video frame by frame and detect circles and then output those images for classification."""
+
+__author__      = "Benjamin Wierzbanowski"
+
+
 import os
 import cv2 as cv
 import numpy as np

@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+
+"""train.py: Running this code will train and save a binary image classification model with the manually classified images received from getball."""
+
+__author__      = "Benjamin Wierzbanowski"
+
+
+
 # Disable warning
 import warnings
 warnings.filterwarnings('ignore')
