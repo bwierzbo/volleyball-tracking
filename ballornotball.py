@@ -9,9 +9,10 @@ import numpy as np
 import model_loader as ml
 
 
-testpath = ('../volleyball-tracking/data/testpath')
+ballpath = ('../volleyball-tracking/data/predball')
+notballpath = ('../volleyball-tracking/data/prednotball')
 
-videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/theclip.mp4')
+videoCapture = cv.VideoCapture('../volleyball-tracking/volleyballVideos/getball0.mp4')
 videoCapture.set(cv.CAP_PROP_BUFFERSIZE, 2)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2+(y1-y2)**2
@@ -23,12 +24,14 @@ while True:
     ret, frame = videoCapture.read()
     if not ret: break
 
+    frame = cv.resize(frame, (1920,1080))
+
     mask = backSub.apply(frame)
 
     mask = cv.GaussianBlur(mask, (13, 13),0)
     ret,mask = cv.threshold(mask,0,255,cv.THRESH_BINARY | cv.THRESH_OTSU)
 
-    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 5, param1=300, param2= 0.85, minRadius=4, maxRadius=22)
+    circles = cv.HoughCircles(mask, cv.HOUGH_GRADIENT_ALT, 1.5, 5, param1=300, param2= 0.8, minRadius=4, maxRadius=24)
 
 
     if circles is not None:
@@ -60,8 +63,10 @@ while True:
                  print("none")
             else:
                 if ml.checkIMG(cut_c) == 1:
+                    cv.imwrite("{0}/d-{1:04d}.jpg".format(ballpath, n), cut_c)
                     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,252,124), 3)
                 else:
+                    cv.imwrite("{0}/d-{1:04d}.jpg".format(notballpath, n), cut_c)
                     cv.circle(frame, (chosen[0], chosen[1]), chosen[2], (0,0,255), 3)
 
             n+=1
@@ -69,7 +74,7 @@ while True:
 
     cv.imshow("ModelPredict", frame)
 
-    if cv.waitKey(10) & 0xFF == ord('q'): break
+    if cv.waitKey(20) & 0xFF == ord('q'): break
 
 videoCapture.release()
 cv.destroyAllWindows()

@@ -24,13 +24,12 @@ from tensorflow import keras
 size = 32
 dim = 3
 
-#model = keras.models.load_model('../volleyball-tracking/model/')
 
-json_file = open('./models/model.json', 'r')
+json_file = open('./models/newmodel.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
-loaded_model.load_weights("./models/model.h5")
+loaded_model.load_weights("./models/newmodel.h5")
 
 
 
@@ -38,5 +37,6 @@ loaded_model.load_weights("./models/model.h5")
 def checkIMG(pic):
     img = cv.resize(pic, (size, size))
     img = np.reshape(img,[1,size, size, dim])
-    prediction = np.argmax(loaded_model.predict(img, verbose=0), axis=-1)[0]
-    return prediction
+    #prediction = np.argmax(loaded_model.predict(img, verbose=0), axis=-1)[0]
+    prediction = int(loaded_model.predict(img, verbose=0)[0])
+    return int(loaded_model.predict(img, verbose=0)[0])
